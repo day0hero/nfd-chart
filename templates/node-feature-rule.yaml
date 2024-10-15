@@ -1,0 +1,22 @@
+{{- if .Values.nfd.rules }}
+{{- range $k, $v := .Values.nfd.rules }}
+apiVersion: nfd.openshift.io/v1
+kind: NodeFeatureRule
+metadata:
+  name: {{ $v.name }}
+spec:
+  rules:
+    - name: {{ $v.name | quote }}
+      labels:
+{{- range $v.labels }}
+        {{ .name |quote }}: {{ .value | quote }}
+{{- end }}
+      matchFeatures:
+{{- if $v.features.loadedModules }}
+      {{- include "nfd-chart.loadedModules" . | indent 8 }}
+{{- end }}
+{{- if $v.features.matchDevices }}
+      {{- include "nfd-chart.matchDevices" . | indent 8 }}
+{{- end }}
+{{- end }}
+{{- end }}

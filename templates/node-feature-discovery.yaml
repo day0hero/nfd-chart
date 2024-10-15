@@ -1,0 +1,30 @@
+apiVersion: nfd.openshift.io/v1
+kind: NodeFeatureDiscovery
+metadata:
+  name: nfd-instance
+  namespace: openshift-nfd
+spec:
+  operand:
+    image: >-
+      {{ .Values.operand.image }}
+    servicePort: {{ .Values.operand.servicePort }}
+  workerConfig:
+    configData: |
+      core:
+{{- include "nfd-chart.core" . | indent 6 }}
+      sources:
+{{- if .Values.nfd.sources.cpu.enabled }}
+{{- include "nfd-chart.sources.cpu" . | indent 6 }}
+{{- end }}
+{{- if .Values.nfd.sources.kernel.enabled }}
+{{- include "nfd-chart.sources.kernel" . | indent 6 }}
+{{- end }}
+{{- if .Values.nfd.sources.pci.enabled }}
+{{- include "nfd-chart.sources.pci" . | indent 6 }}
+{{- end }}
+{{- if .Values.nfd.sources.usb.enabled }}
+{{- include "nfd-chart.sources.usb" . | indent 6 }}
+{{- end }}
+{{- if .Values.nfd.sources.custom.enabled }}
+{{- include "nfd-chart.sources.custom" . | indent 6 }}
+{{- end }}

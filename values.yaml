@@ -1,0 +1,33 @@
+# Default values for nfd-chart.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+# This sets the container image more information can be found here: https://kubernetes.io/docs/concepts/containers/images/
+operand:
+  image: registry.redhat.io/openshift4/ose-node-feature-discovery@sha256:5f92998549dccf26d07138c2f556444e8a81ac41e53a398d9c3f43bc31c20a47
+  servicePort: 12000
+
+# Enable/Disable a set of features to be discovered on a host. Sources are defined in the _nfd-sources.tpl
+nfd:
+  core:
+    sleepInterval: 60s
+  sources:
+    cpu:
+      enabled: false
+    usb:
+      enabled: false
+    kernel:
+      enabled: false
+    pci:
+      enabled: true
+    custom:
+      enabled: false
+## To define custom discovery feature rules, unomment the rules block. Rule features are defined in _nfd-rules.tpl
+#  rules:
+#  - name: example-rule
+#    labels: 
+#      - name: "example-custom-feature"
+#        value: "true"
+#    features:
+#      loadedModules: true
+#      matchDevices: true
