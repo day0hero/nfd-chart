@@ -22,6 +22,7 @@ nfd:
       enabled: true
     custom:
       enabled: false
+      
 ## To define custom discovery feature rules, unomment the rules block. Rule features are defined in _nfd-rules.tpl
 #  rules:
 #  - name: example-rule
